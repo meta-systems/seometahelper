@@ -1,9 +1,9 @@
 ﻿{
 	"update_url":"http://clients2.google.com/service/update2/crx",
-	"name": "SEO helper",
+	"name": "SEO Meta Helper",
 	"version": "1.2",
 	"manifest_version": 2,
-	"description": "Просмотр тайтла, дескрипшена, кейвордс",
+	"description": "Analyze and highlight the keywords on the page and meta tags",
 	"homepage_url": "https://chrome.google.com/webstore/category/extensions",
 	"page_action": {
 		"default_icon": "icon.png",
