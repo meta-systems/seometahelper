@@ -1,4 +1,5 @@
-# seometahelper
+# SEO Meta Helper
 
-sorry i'am not a programmer, but i need some seo stuff
-sorry for jquery
+Sorry i'am not a programmer, but i need some SEO stuff
+
+Sorry for jquery

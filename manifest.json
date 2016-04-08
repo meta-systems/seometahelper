@@ -1,7 +1,7 @@
 ﻿{
 	"update_url":"http://clients2.google.com/service/update2/crx",
 	"name": "SEO Meta Helper",
-	"version": "1.2",
+	"version": "0.7",
 	"manifest_version": 2,
 	"description": "Analyze and highlight the keywords on the page and meta tags",
 	"homepage_url": "https://chrome.google.com/webstore/category/extensions",
