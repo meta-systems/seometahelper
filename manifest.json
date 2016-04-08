@@ -1,0 +1,30 @@
+﻿{
+	"update_url":"http://clients2.google.com/service/update2/crx",
+	"name": "SEO helper",
+	"version": "1.2",
+	"manifest_version": 2,
+	"description": "Просмотр тайтла, дескрипшена, кейвордс",
+	"homepage_url": "https://chrome.google.com/webstore/category/extensions",
+	"page_action": {
+		"default_icon": "icon.png",
+		"default_title": "SEO helper",
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16":"icon16.png",
+		"48":"icon48.png",
+		"128": "icon128.png" 
+	},
+	"background": {
+		"scripts": ["bg.js"]
+	},
+	"permissions": ["tabs", "storage", "<all_urls>"],
+	"content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+	  "css": ["fix.css"],
+      "js": ["content_script.js"]
+    }
+  ]
+	//"permissions": [ "tabs", "http://*/*", "https://*/*" ]
+}

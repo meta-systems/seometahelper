@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <title>Getting Started Extension's Popup</title>
+    <style>
+		html, body {
+			
+		}
+        a:hover {
+            text-decoration:underline;
+        }
+        a {
+            color:#227AA7;
+            text-decoration:none;
+        }
+        body {
+            min-width: 157px;
+            overflow-x: hidden;
+            font-family:arial;
+            font-size:13px;
+        }
+		table td {
+			padding-top:7px;
+			padding-bottom:7px;
+		}
+		table {
+			width:600px;
+			border-collapse:collapse;
+		}
+		.td1 {
+			padding-right:7px;
+			padding-left:7px;
+			font-weight:bold;
+			background:#FFFBCF;
+		}
+		.td2 {
+			padding-left:10px;
+		}
+		.count {
+			padding-left:10px;
+		}
+		.red {
+			color:red !important;
+		}
+		.match, .mark {
+			background: #fff481;
+			padding-left:3px;
+			padding-right:2px;
+			color:black;
+		}
+		.keywords:focus {
+			background:#FFFCDB;
+			color:black;
+		}
+		.keywords {
+			width:550px;
+			margin-bottom:10px;
+			border:1px solid #bbb;
+			color:#aaa;
+			padding-left:4px;
+			/*
+			*/
+		}
+        
+    </style>
+</head>
+<body> <!-- 
+купить интернет магазин цен недорог москв санкт заказ доставк одежд размер женск росси весна демисезонн весенн офис      шерст лен льна кашемир      плать блуз пальт брюк       габриэла тягин аргент argent гамелия gamelia раслов raslov 
+-->
+<input type="text" value="" name="keyword" class="keywords" placeholder="keywords to highlight">
+<table>
+	<tr><td class="td1">Title</td><td class="td2"><div id='seo_title'>...</div></td><td id='seo_title_count' class="count"></td></tr>
+	<tr><td class="td1">Description</td><td class="td2"><div id='seo_description'>...</div></td><td id='seo_description_count' class="count"></td></tr>
+	<tr><td class="td1">Keywords</td><td class="td2"><div id='seo_keywords'>...</div></td><td id='seo_keywords_count' class="count"></td></tr>
+</table>
+
+<script src="popup.js"></script>
+</body>
+</html>
+
