@@ -16,7 +16,7 @@
 		"128": "icon128.png" 
 	},
 	"background": {
-		"scripts": ["bg.js"]
+		"scripts": ["bg.js","popup.js"]
 	},
 	"permissions": ["tabs", "storage", "<all_urls>"],
 	"content_scripts": [

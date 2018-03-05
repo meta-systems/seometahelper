@@ -3,3 +3,5 @@
     chrome.pageAction.setTitle({tabId: tab.id,title:"SEO Meta Helper"});
 	chrome.pageAction.show(tab.id);
 });
+
+console.log('bg');

@@ -16,13 +16,15 @@ e=n.propHooks[b]),void 0!==c?e&&"set"in e&&void 0!==(d=e.set(a,c,b))?d:a[b]=c:e&
 chrome.storage.sync.get("keywords", function (obj) {
     if(obj.keywords !=undefined){
 		$("input[name='keyword']").val(obj.keywords);
+		console.log(obj.keywords);
 	}
 });
+
 
 function saveChanges() {
 
 	// Get a value saved in a form.
-	var theValue = $("input[name='keyword']").val();
+	var theValue = document.getElementsByClassName("keywords")[0].value;
 	// Check that there's some code there.
 	if (!theValue) {
 		//message('Error: No value specified');
@@ -36,7 +38,7 @@ function saveChanges() {
 }
 
 chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.sendRequest(tab.id, {greeting: "hello", data: $("input[name='keyword']").val()}, function(response) {
+    chrome.tabs.sendRequest(tab.id, {greeting: "hello", data: document.getElementsByClassName("keywords")[0].value}, function(response) {
        //alert(response.farewell);
     });
 });
