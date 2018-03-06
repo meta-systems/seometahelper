@@ -4,8 +4,6 @@
 
 Sorry i'am not a programmer, but i needed some SEO stuff
 
-Sorry for jQuery !
-
 Include [jquery.mark](https://github.com/julmot/jquery.mark) v5.2.2
 
 Icons by [HevnGrafix Design](https://www.iconfinder.com/HEVNgrafix)
