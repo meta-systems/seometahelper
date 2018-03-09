@@ -4,4 +4,4 @@
 	chrome.pageAction.show(tab.id);
 });
 
-console.log('bg');
+console.log('bg online');

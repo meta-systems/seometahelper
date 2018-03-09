@@ -44,7 +44,6 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
 		var seo_fields = request.source.split('|||');
 
-
 		//message.innerText = request.source;
 		document.querySelector('#seo_title').innerText = seo_fields[0];
 		document.querySelector('#seo_title_count').innerText = seo_fields[0].length;
@@ -78,10 +77,26 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 				saveChanges();
 			};
 			markUp();
-            document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //передаем функцию последним параметром,точнее результат функции
+			document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //передаем функцию последним параметром,точнее результат функции
 		})();
 	}
 });
+
+
+chrome.runtime.onConnect.addListener(function(port) {
+  console.log('fetch');
+  console.assert(port.name == "knockknock");
+  port.onMessage.addListener(function(msg) {
+    if (msg.joke == "Knock knock")
+      port.postMessage({question: "Who's there?"});
+    else if (msg.answer == "Madame")
+      port.postMessage({question: "Madame who?"});
+    else if (msg.answer == "Madame... Bovary")
+      port.postMessage({question: "I don't get it."});
+  });
+});
+
+
 
 function onWindowLoad() {
 
@@ -100,3 +115,4 @@ function onWindowLoad() {
 }
 
 window.onload = onWindowLoad;
+
