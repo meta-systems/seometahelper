@@ -9,10 +9,12 @@
 
 
 //скуп плагина
+console.log('popup online');
 
 chrome.storage.sync.get("keywords", function (obj) {
     if(obj.keywords !=undefined){
       document.getElementsByClassName("keywords")[0].value = obj.keywords; //populate form from saved object
+      window.sendtocs1 = document.getElementsByClassName("keywords")[0].value;
 	}
 });
 
@@ -40,7 +42,7 @@ chrome.tabs.getSelected(null, function(tab) {
 
 //слушаем контент_скрипт(те фактически скуп браузера) выполняем колл-бэк по внешнему запросу
 chrome.runtime.onMessage.addListener(function(request, sender) {
-	if (request.action == "getSource") {
+	if (request) {
 
 		var seo_fields = request.source.split('|||');
 
@@ -55,10 +57,15 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		document.querySelector('#seo_keywords_count').innerText = seo_fields[1].length;
 
 		(function() {                                   //self-invoke
-
 			var markUp = function() {
 				var keyword = document.getElementsByClassName("keywords")[0].value;
 
+				//this been called on input change
+					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+						var port = chrome.tabs.connect(tabs[0].id, { name: "example" });
+						port.postMessage(	keyword );
+					});
+         //mark keyword inside popup
 			    var markInstance = new Mark(document.querySelectorAll("#seo_title, #seo_description, #seo_keywords"));
 
 					// Determine selected options
@@ -77,29 +84,14 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 				saveChanges();
 			};
 			markUp();
-			document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //передаем функцию последним параметром,точнее результат функции
+			document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //callback by keyup
 		})();
 	}
 });
 
 
-chrome.runtime.onConnect.addListener(function(port) {
-  console.log('fetch');
-  console.assert(port.name == "knockknock");
-  port.onMessage.addListener(function(msg) {
-    if (msg.joke == "Knock knock")
-      port.postMessage({question: "Who's there?"});
-    else if (msg.answer == "Madame")
-      port.postMessage({question: "Madame who?"});
-    else if (msg.answer == "Madame... Bovary")
-      port.postMessage({question: "I don't get it."});
-  });
-});
-
-
-
+//Popup not a valid dom element so we need launch its js like this(when popup.html loaded)
 function onWindowLoad() {
-
 	var message = document.querySelector('#seo_title');
 
 	chrome.tabs.executeScript(null, {
@@ -111,7 +103,6 @@ function onWindowLoad() {
 			message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
 		}
 	});
-
 }
 
 window.onload = onWindowLoad;

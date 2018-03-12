@@ -37,57 +37,38 @@ function seo_helper(){
     return seo_title + '||| '+ seo_keywords + '||| '+ seo_description;
 }
 
-//отправляем в поп-ап(сэнд-бокс расширения) резульаты с ДОМ
+//sending function result to popup
 chrome.runtime.sendMessage({
-    action: "getSource",
     source: seo_helper()
 });
 
+//lisen for connect then mark from msg
+chrome.runtime.onConnect.addListener(function(port) {
+  console.log('fetch');
+  port.onMessage.addListener(function(msg) {
+    console.log(msg);
+     var markInstance = new Mark(document.querySelector("body"));
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+        (function (){            //self-invoke
+          // fetch keyword
+          var keyword = msg;
 
-    (function () {                             //self-invoke
-        if (request.greeting == "hello"){     //console.log("123"); // тут он отдается прямо в браузер
+          // Determine selected options
+          var options = {
+            "separateWordSearch": true
+          };
 
-          var markInstance = new Mark(document.querySelector("body"));
+          // Remove previous marked elements and mark
+          // the new keyword inside the context
+          markInstance.unmark({
+            done: function(){
+              markInstance.mark(keyword, options);
+            }
+          });
+        })();
 
-          (function (){            //self-invoke
-              // fetch keyword
-              var keyword = request.data;
-
-            // Determine selected options
-            var options = {
-              "separateWordSearch": true
-            };
-
-              // Remove previous marked elements and mark
-              // the new keyword inside the context
-              markInstance.unmark({
-                done: function(){
-                  markInstance.mark(keyword, options);
-                }
-              });
-            })();
-
-            sendResponse({farewell: request.data});
-        } else {
-            alert('not hello');
-            sendResponse({}); // snub them.
-        }
-    }());
+  });
 });
-
-
-var port = chrome.runtime.connect({name: "knockknock"});
-    console.log('throw');
-port.postMessage({joke: "Knock knock"});
-port.onMessage.addListener(function(msg) {
-  if (msg.question == "Who's there?")
-    port.postMessage({answer: "Madame"});
-  else if (msg.question == "Madame who?")
-    port.postMessage({answer: "Madame... Bovary"});
-});
-
 
 
 
