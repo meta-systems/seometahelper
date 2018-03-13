@@ -63,6 +63,12 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		document.querySelector('#h2').innerText = seo_fields[4];
 		document.querySelector('#h2_keywords_count').innerText = seo_fields[4].length;
 
+		document.querySelector('#IMG_alt').innerText = seo_fields[5];
+		document.querySelector('#IMG_alt_keywords_count').innerText = seo_fields[5].length;
+
+        document.querySelector('#IMG_rel').innerText = seo_fields[6];
+        document.querySelector('#IMG_rel_keywords_count').innerText = seo_fields[6].length;
+
 		(function() {                                   //self-invoke
 			var markUp = function() {
 				var keyword = document.getElementsByClassName("keywords")[0].value;
