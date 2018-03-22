@@ -57,17 +57,59 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		document.querySelector('#seo_keywords').innerText = seo_fields[1];
 		document.querySelector('#seo_keywords_count').innerText = seo_fields[1].length;
 
-		document.querySelector('#h1').innerText = seo_fields[3];
 
-        console.log(seo_fields[4]);
+        let H1array = seo_fields[3].split(',');
 
-		document.querySelector('#h2').innerText = seo_fields[4]+'</br>';
+        for (let item of H1array) {
+            let p_for_H1 = document.createElement('div');
+            let p_for_H1_inner = document.createTextNode(item);
+            p_for_H1.appendChild(p_for_H1_inner);
+            let h1 = document.querySelector('#h1');
+            h1.appendChild(p_for_H1);
+        }
 
-		document.querySelector('#IMG_alt').innerText = seo_fields[5];
+        //thats how we create a DOM element without Jquary
+        let H2array = seo_fields[4].split(','); //return array
 
-        document.querySelector('#IMG_rel').innerText = seo_fields[6];
+        //ECMA6 "for" loop
+        for (let item of H2array) {
+            //create DOM element
+            let p_for_H2 = document.createElement('div');
 
-		(function() {                                   //self-invoke
+            //create textNode element
+            let p_for_H2_inner = document.createTextNode(item);
+
+            //fills p with textNode
+            p_for_H2.appendChild(p_for_H2_inner);
+
+            let h2 = document.querySelector('#h2');
+
+            h2.appendChild(p_for_H2);
+        }
+
+
+        let IMG_alt_array = seo_fields[5].split(',');
+
+        for (let item of IMG_alt_array) {
+            let IMG_alt_DIV = document.createElement('div');
+            let IMG_alt_inner = document.createTextNode(item);
+            IMG_alt_DIV.appendChild(IMG_alt_inner);
+            let IMG_alt = document.querySelector('#IMG_alt');
+            IMG_alt.appendChild(IMG_alt_DIV);
+        }
+
+        let IMG_rel_array = seo_fields[5].split(',');
+
+        for (let item of IMG_rel_array) {
+            let IMG_rel_DIV = document.createElement('div');
+            let IMG_rel_inner = document.createTextNode(item);
+            IMG_rel_DIV.appendChild(IMG_rel_inner);
+            let IMG_rel = document.querySelector('#IMG_alt');
+            IMG_rel.appendChild(IMG_rel_DIV);
+        }
+
+        //self-invoke
+		(function() {
 			var markUp = function() {
 				var keyword = document.getElementsByClassName("keywords")[0].value;
 
@@ -76,6 +118,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 						var port = chrome.tabs.connect(tabs[0].id, { name: "example" });   //call current tad (long-pool)
 						port.postMessage(	keyword );
 					});
+
          //mark keyword inside popup
 			    var markInstance = new Mark(document.querySelectorAll("#seo_title, #seo_description, #seo_keywords ,#h1 ,#h2 ,#IMG_alt"));
 
@@ -119,3 +162,7 @@ function onWindowLoad() {
 
 window.onload = onWindowLoad;
 
+// p_for_H2 = document.createElement('p')
+// p_for_H2.innerText = "123";
+// var h2 = document.querySelector('.views-feed .view-header div h2')
+// h2.append=p_for_H2 ;

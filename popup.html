@@ -3,6 +3,9 @@
 <head>
     <title>Getting Started Extension's Popup</title>
     <style>
+
+        /*   this is CSS for pop-up    */
+
 		html, body {
 			
 		}
@@ -19,6 +22,31 @@
             font-family:arial;
             font-size:13px;
         }
+
+        #IMG_alt::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+        }
+
+        #IMG_alt::-webkit-scrollbar
+        {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #IMG_alt::-webkit-scrollbar-thumb
+        {
+            background-color: #000000;
+            border: 2px solid #555555;
+        }
+
+        #h1, #h2, #IMG_alt{
+            max-height:120px;
+            overflow:scroll;
+        }
+
+
 		table td {
 			padding-top:7px;
 			padding-bottom:7px;
@@ -42,12 +70,12 @@
 		.red {
 			color:red !important;
 		}
-		.match, .mark {
-			background: #fff481;
-			padding-left:3px;
-			padding-right:2px;
-			color:black;
-		}
+        .match, .mark, .markMark {
+            background: #fff481 !important;
+            padding-left:3px;
+            padding-right:2px;
+            color:black;
+        }
 		.keywords:focus {
 			background:#FFFCDB;
 			color:black;
@@ -61,6 +89,7 @@
 			/*
 			*/
 		}
+
         
     </style>
 </head>
