@@ -1,14 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    <title>Getting Started Extension's Popup</title>
     <style>
 
         /*   this is CSS for pop-up    */
 
-		html, body {
-			
-		}
+        html, body {
+
+        }
         a:hover {
             text-decoration:underline;
         }
@@ -23,89 +22,102 @@
             font-size:13px;
         }
 
-        #IMG_alt::-webkit-scrollbar-track
-        {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        #IMG_alt::-webkit-scrollbar,#IMG_rel::-webkit-scrollbar, #h2::-webkit-scrollbar, #h1::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #IMG_alt::-webkit-scrollbar-track,#IMG_rel::-webkit-scrollbar-track, #h2::-webkit-scrollbar-track, #h1::-webkit-scrollbar-track {
             background-color: #F5F5F5;
         }
 
-        #IMG_alt::-webkit-scrollbar
-        {
-            width: 10px;
-            background-color: #F5F5F5;
+
+        #IMG_alt::-webkit-scrollbar-thumb,#IMG_rel::-webkit-scrollbar-thumb, #h2::-webkit-scrollbar-thumb, #h1::-webkit-scrollbar-thumb {
+            background-color: #aaa;
         }
 
-        #IMG_alt::-webkit-scrollbar-thumb
-        {
-            background-color: #000000;
-            border: 2px solid #555555;
-        }
 
-        #h1, #h2, #IMG_alt{
+        #h1, #h2, #IMG_alt, #IMG_rel{
             max-height:120px;
-            overflow:scroll;
+            overflow-y:auto;
+            overflow-x:hidden;
         }
 
+        #seo_title div:hover,#seo_description div:hover,#seo_keywords div:hover,#h1 div:hover, #h2 div:hover, #IMG_alt div:hover, #IMG_rel div:hover{
+            background: #FFFBCF;
+            cursor: pointer;
+        }
 
-		table td {
-			padding-top:7px;
-			padding-bottom:7px;
-		}
-		table {
-			width:600px;
-			border-collapse:collapse;
-		}
-		.td1 {
-			padding-right:7px;
-			padding-left:7px;
-			font-weight:bold;
-			background:#FFFBCF;
-		}
-		.td2 {
-			padding-left:10px;
-		}
-		.count {
-			padding-left:10px;
-		}
-		.red {
-			color:red !important;
-		}
+        table td {
+            padding-top:7px;
+            padding-bottom:7px;
+        }
+
+        table {
+            width:600px;
+            border-collapse:collapse;
+        }
+
+        .td1 {
+            padding-right:7px;
+            padding-left:7px;
+            font-weight:bold;
+            background:#FFFBCF;
+        }
+
+        .td2 {
+            padding-left:10px;
+        }
+
+        .count {
+            padding-left:10px;
+        }
+
+        .red {
+            color:red !important;
+        }
+
         .match, .mark, .markMark {
             background: #fff481 !important;
             padding-left:3px;
             padding-right:2px;
             color:black;
         }
-		.keywords:focus {
-			background:#FFFCDB;
-			color:black;
-		}
-		.keywords {
-			width:550px;
-			margin-bottom:10px;
-			border:1px solid #bbb;
-			color:#aaa;
-			padding-left:4px;
-			/*
-			*/
-		}
 
-        
+        .keywords:focus {
+            background:#FFFCDB;
+            color:black;
+        }
+
+        .keywords {
+            width:550px;
+            margin-bottom:10px;
+            border:1px solid #bbb;
+            padding-left:4px;
+            font-size: 17px;
+            font-family:arial;
+        }
+
+        .keywords::placeholder {
+            color:black;
+        }
+
+        /*
+             */
     </style>
+    <title>Getting Started Extension's Popup</title>
 </head>
-<body> <!-- 
-купить интернет магазин цен недорог москв санкт заказ доставк одежд размер женск росси весна демисезонн весенн офис      шерст лен льна кашемир      плать блуз пальт брюк       габриэла тягин аргент argent гамелия gamelia раслов raslov 
+<body> <!--
+купить интернет магазин цен недорог москв санкт заказ доставк одежд размер женск росси весна демисезонн весенн офис      шерст лен льна кашемир      плать блуз пальт брюк       габриэла тягин аргент argent гамелия gamelia раслов raslov
 -->
-<input type="text" value="" name="keyword" class="keywords" placeholder="keywords to highlight">
+<textarea  name="keyword" class="keywords" placeholder="keywords to highlight" autofocus > </textarea>
 <table>
 	<tr><td class="td1">Title</td><td class="td2"><div id='seo_title'>...</div></td><td id='seo_title_count' class="count"></td></tr>
 	<tr><td class="td1">Description</td><td class="td2"><div id='seo_description'>...</div></td><td id='seo_description_count' class="count"></td></tr>
 	<tr><td class="td1">Keywords</td><td class="td2"><div id='seo_keywords'>...</div></td><td id='seo_keywords_count' class="count"></td></tr>
-    <tr><td class="td1">H1</td><td class="td2"><div id='h1'>...</div></td><td id='h1_keywords_count' class="count"></td></tr>
-    <tr><td class="td1">H2</td><td class="td2"><div id='h2'>...</div></td><td id='h2_keywords_count' class="count"></td></tr>
-    <tr><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'>...</div></td><td id='IMG_alt_keywords_count' class="count"></td></tr>
-    <tr><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel'>...</div></td><td id='IMG_rel_keywords_count' class="count"></td></tr>
-    <tr><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel2'>111</br>111</br>111</div></td><td id='IMG_rel_keywords_count2' class="count"></td></tr>
+    <tr><td class="td1">H1</td><td class="td2"><div id='h1'>...</div></td></td></tr>
+    <tr><td class="td1">H2</td><td class="td2"><div id='h2'>...</div></td></td></tr>
+    <tr><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'>...</div></td></tr>
+    <tr><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel'>...</div></td></tr>
 </table>
 
 <script src="popup.js"></script>
