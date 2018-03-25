@@ -1,20 +1,18 @@
 ﻿{
 	"update_url":"http://clients2.google.com/service/update2/crx",
 	"name": "SEO Meta Helper",
-	"version": "0.9.1",
+	"version": "0.9.2",
 	"manifest_version": 2,
 	"description": "Analyze and highlight the keywords and meta tags on the page",
-	"homepage_url": "https://chrome.google.com/webstore/category/extensions",
-	"page_action": {
-		"default_icon": "icon.png",
-		"default_title": "SEO helper",
-		"default_popup": "popup.html"
-	},
+	"homepage_url": "https://chrome.google.com/webstore/detail/seo-meta-helper/ophnbpddglgmhejmapegoopggbelkeep",
 	"icons": {
-		"16":"icon16.png",
-		"48":"icon48.png",
-		"128": "icon128.png" 
+		"128":"icon128.png"
 	},
+    "browser_action": {
+        "default_title": "SEO meta helper",
+        "default_icon": "icon48.png",
+        "default_popup": "popup.html"
+    },
 	"background": {
 		"scripts": ["bg.js","popup.js"]
 	},

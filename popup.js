@@ -9,7 +9,6 @@
 
 
 //plugin scope -- function scope didnt work right
-console.log('popup online');
 
 chrome.storage.sync.get("keywords", function (obj) {
     if(obj.keywords !=undefined){

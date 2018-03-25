@@ -9,7 +9,6 @@
 
 //browser scope -- called when "click"
 
-    console.log("CS online");
 //DOM search
 function seo_helper(){
 
