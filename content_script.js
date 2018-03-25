@@ -44,7 +44,7 @@ function seo_helper(){
     var IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
 
     //console.log(typeof(IMG_alt)); console.log(IMG_alt);
-    return seo_title + '||| '+ seo_keywords + '||| '+ seo_description +' ||| '+ h1tag +' ||| '+ h2tag +' ||| '+ IMG_alt +' ||| '+ IMG_rel +' ||| '+ window.location.href ;
+    return seo_title + '||| '+ seo_keywords + '||| '+ seo_description +' ||| '+ h1tag +' ||| '+ h2tag +' ||| '+ IMG_alt +' ||| '+ IMG_rel +'|||'+ window.location.href +'|||'+ window.location.hostname ;
 
 }
 

@@ -56,10 +56,9 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		document.querySelector('#seo_keywords').innerText = seo_fields[1];
 		document.querySelector('#seo_keywords_count').innerText = seo_fields[1].length;
         
-        // fixme:
-        // откуда пробел?
-		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+seo_fields[7].replace(' ',''));//.replace(' https://',''));
+		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+seo_fields[7]);
 		// http://webcache.googleusercontent.com/search?q=cache:msys.pro/portfolio
+		document.querySelector('#robots').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');//.replace(' https://',''));
 
         let H1array = seo_fields[3].split(',');
 
