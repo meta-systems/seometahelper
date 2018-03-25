@@ -5,9 +5,6 @@
 
         /*   this is CSS for pop-up    */
 
-        html, body {
-
-        }
         a:hover {
             text-decoration:underline;
         }
@@ -44,7 +41,6 @@
 
         #seo_title div:hover,#seo_description div:hover,#seo_keywords div:hover,#h1 div:hover, #h2 div:hover, #IMG_alt div:hover, #IMG_rel div:hover{
             background: #FFFBCF;
-            cursor: pointer;
         }
 
         table td {
@@ -61,7 +57,10 @@
             padding-right:7px;
             padding-left:7px;
             font-weight:bold;
+            font-size:12px;
+            /*
             background:#FFFBCF;
+            */
         }
 
         .td2 {
@@ -69,7 +68,10 @@
         }
 
         .count {
-            padding-left:10px;
+            font-size:10px;
+            color:#777;
+            display:block;
+            font-weight:normal;
         }
 
         .red {
@@ -92,32 +94,35 @@
             width:550px;
             margin-bottom:10px;
             border:1px solid #bbb;
-            padding-left:4px;
             font-size: 17px;
             font-family:arial;
+            padding: 3px 5px;
         }
 
         .keywords::placeholder {
             color:black;
         }
+        
+        .input_label {
+            font-size:10px;
+            color:#777;
+            padding-bottom:2px;
+        }
 
-        /*
-             */
     </style>
     <title>Getting Started Extension's Popup</title>
 </head>
-<body> <!--
-купить интернет магазин цен недорог москв санкт заказ доставк одежд размер женск росси весна демисезонн весенн офис      шерст лен льна кашемир      плать блуз пальт брюк       габриэла тягин аргент argent гамелия gamelia раслов raslov
--->
-<textarea  name="keyword" class="keywords" placeholder="keywords to highlight" autofocus > </textarea>
+<body>
+<div class="input_label">Keywords to highlight:</div>
+<textarea  name="keyword" class="keywords" autofocus ></textarea>
 <table>
-	<tr><td class="td1">Title</td><td class="td2"><div id='seo_title'>...</div></td><td id='seo_title_count' class="count"></td></tr>
-	<tr><td class="td1">Description</td><td class="td2"><div id='seo_description'>...</div></td><td id='seo_description_count' class="count"></td></tr>
-	<tr><td class="td1">Keywords</td><td class="td2"><div id='seo_keywords'>...</div></td><td id='seo_keywords_count' class="count"></td></tr>
-    <tr><td class="td1">H1</td><td class="td2"><div id='h1'>...</div></td></td></tr>
-    <tr><td class="td1">H2</td><td class="td2"><div id='h2'>...</div></td></td></tr>
-    <tr><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'>...</div></td></tr>
-    <tr><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel'>...</div></td></tr>
+	<tr><td class="td1">Title <span id='seo_title_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_title'></div></td></tr>
+	<tr><td class="td1">Description <span id='seo_description_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_description'></div></td></tr>
+	<tr><td class="td1">Keywords <span id='seo_keywords_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_keywords'></div></td></tr>
+    <tr><td class="td1">H1</td><td class="td2"><div id='h1'></div></td></tr>
+    <tr><td class="td1">H2</td><td class="td2"><div id='h2'></div></td></tr>
+    <tr><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'></div></td></tr>
+    <tr><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel'></div></td></tr>
 </table>
 
 <script src="popup.js"></script>
