@@ -3,8 +3,6 @@
 <head>
     <style>
 
-        /*   this is CSS for pop-up    */
-
         a:hover {
             text-decoration:underline;
         }
@@ -27,11 +25,9 @@
             background-color: #F5F5F5;
         }
 
-
         #IMG_alt::-webkit-scrollbar-thumb,#IMG_rel::-webkit-scrollbar-thumb, #h2::-webkit-scrollbar-thumb, #h1::-webkit-scrollbar-thumb {
             background-color: #aaa;
         }
-
 
         #h1, #h2, #IMG_alt, #IMG_rel{
             max-height:120px;
@@ -110,11 +106,17 @@
             color:#777;
             padding-bottom:2px;
         }
+        
+        .cacheBox {
+            float:right;
+            font-size:10px;
+        }
 
     </style>
-    <title>Getting Started Extension's Popup</title>
+    <title>SEO meta helper</title>
 </head>
 <body>
+<div class="cacheBox"><a href="#" id="google_cache" target="_blank">google cache</a></div>
 <div class="input_label">Keywords to highlight:</div>
 <textarea  name="keyword" class="keywords" autofocus ></textarea>
 <table>
