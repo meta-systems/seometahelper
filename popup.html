@@ -43,28 +43,29 @@
             background: #FFFBCF;
         }
 
-        table td {
-            padding-top:7px;
-            padding-bottom:7px;
-        }
-
         table {
             width:600px;
             border-collapse:collapse;
         }
 
+        table tr:hover {
+            background:#FFFBCF;
+            box-shadow:0 2px 8px rgba(0,0,0,0.3);
+            border-radius:2px;
+        }
+
+        table td {
+            padding:8px;
+        }
+
         .td1 {
-            padding-right:7px;
-            padding-left:7px;
+            padding-right:0;
             font-weight:bold;
             font-size:12px;
-            /*
-            background:#FFFBCF;
-            */
         }
 
         .td2 {
-            padding-left:10px;
+            
         }
 
         .count {
@@ -91,12 +92,13 @@
         }
 
         .keywords {
-            width:550px;
+            width:586px;
             margin-bottom:10px;
             border:1px solid #bbb;
             font-size: 17px;
             font-family:arial;
             padding: 3px 5px;
+            height: 20px;
         }
 
         .keywords::placeholder {
