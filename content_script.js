@@ -35,6 +35,7 @@ function seo_helper(){
     }
 
     
+    
     // CANONICAL
     var links = document.getElementsByTagName("link");
     var canonical = '';

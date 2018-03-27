@@ -52,7 +52,8 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		document.querySelector('#seo_title_count').innerText = seo_fields[0].length;
         
         // description
-        if(seo_fields[1].length){
+        
+        if(seo_fields[2].length){
             document.querySelector('#seo_description').innerText = seo_fields[2];
             document.querySelector('#seo_description_count').innerText = seo_fields[2].length;
         } else {
