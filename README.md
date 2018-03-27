@@ -1,8 +1,8 @@
 # SEO Meta Helper
 
-![](https://raw.githubusercontent.com/petrovnn/seometahelper/master/seo_meta_helper_logo.png)
+Analyze and highlight the keywords and meta tags on the page
 
-Sorry i'am not a programmer, but i needed some SEO stuff
+![](https://raw.githubusercontent.com/petrovnn/seometahelper/master/seo_meta_helper_logo.png)
 
 Include mark.js v8.6.0
 
