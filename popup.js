@@ -41,6 +41,7 @@ chrome.tabs.getSelected(null, function(tab) {     //get current tab
 
 //слушаем контент_скрипт(те фактически скуп браузера) выполняем колл-бэк по внешнему запросу
 chrome.runtime.onMessage.addListener(function(request, sender) {
+    
 	if (request) {
 
 		var seo_fields = request.source.split('|||'); //array made
@@ -49,19 +50,65 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		//message.innerText = request.source;
 		document.querySelector('#seo_title').innerText = seo_fields[0];
 		document.querySelector('#seo_title_count').innerText = seo_fields[0].length;
-
-		document.querySelector('#seo_description').innerText = seo_fields[2];
-		document.querySelector('#seo_description_count').innerText = seo_fields[2].length;
-
-		document.querySelector('#seo_keywords').innerText = seo_fields[1];
-		document.querySelector('#seo_keywords_count').innerText = seo_fields[1].length;
         
-		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+seo_fields[7]);
+        // description
+        if(seo_fields[1].length){
+            document.querySelector('#seo_description').innerText = seo_fields[2];
+            document.querySelector('#seo_description_count').innerText = seo_fields[2].length;
+        } else {
+            document.querySelector('#seo_description').innerText = 'Description is missing!';
+            document.querySelector('#description_p').classList.add('missing');
+        }
+        
+        // keywords
+		if(seo_fields[1].length){
+            document.querySelector('#seo_keywords').innerText = seo_fields[1];
+            document.querySelector('#seo_keywords_count').innerText = seo_fields[1].length;
+        } else {
+            document.querySelector('#keywords_p').classList.add('hidden_tr');
+        }
+        
+        // google cache
 		// http://webcache.googleusercontent.com/search?q=cache:msys.pro/portfolio
-		document.querySelector('#robots').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');//.replace(' https://',''));
+		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+seo_fields[7]);
+		
+        // robots.txt
+        document.querySelector('#robots').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');
+        document.querySelector('#robots2').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');
 
+        // canonical
+        if(seo_fields[9].length){
+            document.querySelector('#canonical').innerText = seo_fields[9];
+        } else {
+            document.querySelector('#canonical_p').classList.add('hidden_tr');
+        }
+        
+        // noindex
+        //console.log(seo_fields[10]);
+        if(seo_fields[10] == 'true'){
+            document.querySelector('#noindex').innerText = 'Indexing is forbidden';
+        };
+        
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://msys.pro/robots/index.php?domain="+seo_fields[7]+"&uri="+seo_fields[11]+"");
+        xhr.onload = function (e) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if(xhr.responseText == 'denied'){
+                    //document.querySelector('#noindex').innerText = '';                    
+                    document.querySelector('#indexing_p').classList.add('show_tr');  
+                } 
+            }
+        };
+        xhr.send(null);
+        
         let H1array = seo_fields[3].split(',');
-
+        
+        if(H1array[0] == ''){
+            document.querySelector('#h1').innerText = 'H1 is missing!';
+            document.querySelector('#h1_p').classList.add('missing');
+        }
+        
         for (let item of H1array) {
             let p_for_H1 = document.createElement('div');
             let p_for_H1_inner = document.createTextNode(item);

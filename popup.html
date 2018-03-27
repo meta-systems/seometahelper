@@ -8,7 +8,6 @@
         }
         a {
             color:#227AA7;
-            text-decoration:none;
         }
         body {
             min-width: 157px;
@@ -35,29 +34,25 @@
             overflow-x:hidden;
         }
 
-        #seo_title div:hover,#seo_description div:hover,#seo_keywords div:hover,#h1 div:hover, #h2 div:hover, #IMG_alt div:hover, #IMG_rel div:hover{
-            background: #FFFBCF;
-        }
-
         table {
             width:600px;
             border-collapse:collapse;
         }
-
+        .hidden_tr { display:none; }
         table tr:hover {
-            background:#FFFBCF;
-            box-shadow:0 2px 8px rgba(0,0,0,0.3);
-            border-radius:2px;
+            background:#fbfbfb;
         }
 
         table td {
             padding:8px;
+            border-bottom:1px solid #eee;
         }
 
         .td1 {
             padding-right:0;
             font-weight:bold;
             font-size:12px;
+            width:75px;
         }
 
         .count {
@@ -85,10 +80,10 @@
             width:586px;
             margin-bottom:10px;
             border:1px solid #bbb;
-            font-size: 17px;
+            font-size: 15px;
             font-family:arial;
             padding: 3px 5px;
-            height: 20px;
+            height: 18px;
         }
 
         .keywords::placeholder {
@@ -96,17 +91,33 @@
         }
         
         .input_label {
-            font-size:10px;
+            font-size:11px;
             color:#777;
             padding-bottom:2px;
         }
         
         .cacheBox {
             float:right;
-            font-size:10px;
+            font-size:11px;
         }
         .tool {
             margin-left:7px;
+        }
+        #indexing_p {
+            display:none;
+        }
+        #indexing_p.show_tr {
+            display:table-row;
+        }
+        .missing .td2,
+        #indexing_p .td2,
+        #indexing_p .td2 a {
+            color:#dd0000;
+        }
+        
+        #img_alt,
+        #img_rel{
+            display:none;
         }
 
     </style>
@@ -121,12 +132,15 @@
 <textarea  name="keyword" class="keywords" autofocus ></textarea>
 <table>
 	<tr><td class="td1">Title <span id='seo_title_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_title'></div></td></tr>
-	<tr><td class="td1">Description <span id='seo_description_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_description'></div></td></tr>
-	<tr><td class="td1">Keywords <span id='seo_keywords_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_keywords'></div></td></tr>
-    <tr><td class="td1">H1</td><td class="td2"><div id='h1'></div></td></tr>
+	<tr id="description_p"><td class="td1">Description <span id='seo_description_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_description'></div></td></tr>
+	<tr id="keywords_p"><td class="td1">Keywords <span id='seo_keywords_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_keywords'></div></td></tr>
+	<tr id="canonical_p"><td class="td1">Canonical</td><td class="td2"><div id='canonical'></div></td></tr>
+	<tr id="indexing_p"><td class="td1">Indexing</td><td class="td2">indexing disallowed by <a href="#" id="robots2" target="_blank">robots.txt</a></td></tr>
+    <tr id="h1_p"><td class="td1">H1</td><td class="td2"><div id='h1'></div></td></tr>
     <tr><td class="td1">H2</td><td class="td2"><div id='h2'></div></td></tr>
-    <tr><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'></div></td></tr>
-    <tr><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel'></div></td></tr>
+    <tr id="img_alt"><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'></div></td></tr>
+    <tr id="img_rel"><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel'></div></td></tr>
+    
 </table>
 
 <script src="popup.js"></script>

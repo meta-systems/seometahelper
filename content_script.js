@@ -12,9 +12,9 @@
 //DOM search
 function seo_helper(){
 
-    var seo_title = ' ',
-        seo_keywords = ' ',
-        seo_description = ' ';
+    var seo_title = '',
+        seo_keywords = '',
+        seo_description = '';
 
 
     if(document.getElementsByTagName("title")[0].innerHTML != undefined){
@@ -22,7 +22,6 @@ function seo_helper(){
     }
 
     var metas = document.getElementsByTagName("meta"); //array of DOM elements return
-
     //getElements returns last element is irrelevant we disband it
     for(var i = metas.length -1; i >= 0 ; i--){
 
@@ -35,6 +34,42 @@ function seo_helper(){
         }
     }
 
+    
+    // CANONICAL
+    var links = document.getElementsByTagName("link");
+    var canonical = '';
+    for(i = 0; i < links.length; i++) { 
+
+        if(links[i].getAttribute("rel") != undefined && links[i].getAttribute("rel") == 'canonical'){
+            canonical = links[i].getAttribute("href");
+            console.log(canonical);
+        }
+    }
+    var noindex = 'false';                
+
+    //getElements returns last element is irrelevant we disband it
+    for(var i = metas.length -1; i >= 0 ; i--){
+        
+        // keywords
+        if(metas[i].getAttribute("name") != undefined && metas[i].getAttribute("name") == 'keywords'){
+            seo_keywords = metas[i].getAttribute("content");
+        }
+
+        // description
+        if(metas[i].getAttribute("name") != undefined && metas[i].getAttribute("name") == 'description'){
+            seo_description = metas[i].getAttribute("content");
+        }
+        
+        // noindex 
+        // <meta name="robots" content="noindex">
+        if(metas[i].getAttribute("name") != undefined && metas[i].getAttribute("name") == 'robots'){
+            if (metas[i].getAttribute("content") == 'noindex'){
+                noindex = true;                
+            }
+        }
+        
+    }
+
     var h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText } ); //ECMA6
 
     var h2tag = Array.prototype.slice.call( document.getElementsByTagName("h2") ).map( function( e ){ return e.innerText } ); //ECMA6
@@ -44,7 +79,7 @@ function seo_helper(){
     var IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
 
     //console.log(typeof(IMG_alt)); console.log(IMG_alt);
-    return seo_title + '||| '+ seo_keywords + '||| '+ seo_description +' ||| '+ h1tag +' ||| '+ h2tag +' ||| '+ IMG_alt +' ||| '+ IMG_rel +'|||'+ window.location.href +'|||'+ window.location.hostname ;
+    return seo_title + '|||'+ seo_keywords + '|||'+  seo_description +'|||'+ h1tag +'|||'+ h2tag +'|||'+ IMG_alt +'|||'+ IMG_rel +'|||'+ window.location.href +'|||'+ window.location.hostname +'|||'+  canonical +'|||'+ noindex +'|||'+ location.pathname; // 11
 
 }
 
