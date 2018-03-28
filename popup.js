@@ -99,6 +99,9 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         // robots.txt
         document.querySelector('#robots').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');
         document.querySelector('#robots2').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');
+        
+        // liveinternet
+        document.querySelector('#liveinternet').setAttribute("href", 'http://counter.yadro.ru/values?site='+(seo_fields[8].replace('www.','')));
 
         // canonical
         if(seo_fields[9].length){
