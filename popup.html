@@ -119,6 +119,17 @@
         #img_rel{
             display:none;
         }
+        .input_copy {
+            position:absolute;
+            top:-1000px;
+            left:-1000px;
+        }
+        .copy {
+            opacity:0.4;
+        }
+        .copy:hover {
+            opacity:1;
+        }
 
     </style>
     <title>SEO meta helper</title>
@@ -129,10 +140,14 @@
     <a href="#" class="tool" id="google_cache" target="_blank">google cache</a>
 </div>
 <div class="input_label">Keywords to highlight:</div>
-<textarea  name="keyword" class="keywords" autofocus ></textarea>
+<textarea name="keyword" class="keywords" autofocus ></textarea>
+
+<input type="text" class="input_copy" id="input_title" value=""/>
+<input type="text" class="input_copy" id="input_description" value=""/>
+
 <table>
-	<tr><td class="td1">Title <span id='seo_title_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_title'></div></td></tr>
-	<tr id="description_p"><td class="td1">Description <span id='seo_description_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_description'></div></td></tr>
+	<tr><td class="td1">Title <span id='seo_title_count' class="count" title="Number of characters"></span></td><td class="td2"><span id='seo_title'></span> <a href="#" id="copy_title" class="copy" title="Copy text"><img src="copy.svg" width="15"/></a></a></td></tr>
+	<tr id="description_p"><td class="td1">Description <span id='seo_description_count' class="count" title="Number of characters"></span></td><td class="td2"><span id='seo_description'></span> <a href="#" id="copy_description" class="copy" title="Copy text"><img src="copy.svg" width="15"/></a></a></td></tr>
 	<tr id="keywords_p"><td class="td1">Keywords <span id='seo_keywords_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_keywords'></div></td></tr>
 	<tr id="canonical_p"><td class="td1">Canonical</td><td class="td2"><div id='canonical'></div></td></tr>
 	<tr id="indexing_p"><td class="td1">Indexing</td><td class="td2">indexing disallowed by <a href="#" id="robots2" target="_blank">robots.txt</a></td></tr>

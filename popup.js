@@ -48,13 +48,36 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         //console.log(seo_fields);
 
 		//message.innerText = request.source;
+        
+        // copy title
+        document.getElementById("copy_title").onclick = function() {
+          document.querySelector('#input_title').select();
+          try {
+            var successful = document.execCommand('copy');
+          } catch(e) {}
+          document.querySelector('#input_title').blur();
+          return false;
+        }
+        
+        // copy description
+        document.getElementById("copy_description").onclick = function() {
+          document.querySelector('#input_description').select();
+          try {
+            var successful = document.execCommand('copy');
+          } catch(e) {}
+          document.querySelector('#input_description').blur();
+          return false;
+        }
+        
+        // title
 		document.querySelector('#seo_title').innerText = seo_fields[0];
+		document.querySelector('#input_title').value = seo_fields[0];
 		document.querySelector('#seo_title_count').innerText = seo_fields[0].length;
         
         // description
-        
         if(seo_fields[2].length){
             document.querySelector('#seo_description').innerText = seo_fields[2];
+            document.querySelector('#input_description').value = seo_fields[2];
             document.querySelector('#seo_description_count').innerText = seo_fields[2].length;
         } else {
             document.querySelector('#seo_description').innerText = 'Description is missing!';
