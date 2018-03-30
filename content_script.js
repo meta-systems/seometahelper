@@ -46,7 +46,7 @@ function seo_helper(){
             console.log(canonical);
         }
     }
-    var noindex = 'false';                
+    var noindex = 'false';
 
     //getElements returns last element is irrelevant we disband it
     for(var i = metas.length -1; i >= 0 ; i--){
@@ -71,15 +71,15 @@ function seo_helper(){
         
     }
 
-    var h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText } ); //ECMA6
+    var h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText + '^' } ); //ECMA6
 
-    var h2tag = Array.prototype.slice.call( document.getElementsByTagName("h2") ).map( function( e ){ return e.innerText } ); //ECMA6
+    var h2tag = Array.prototype.slice.call( document.getElementsByTagName("h2") ).map( function( e ){ return e.innerText + '^'} ); //ECMA6
 
     var IMG_alt = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.alt } ); //ECMA6
 
     var IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
 
-    //console.log(typeof(IMG_alt)); console.log(IMG_alt);
+    console.log(typeof(IMG_alt)); console.log(h2tag);
     return seo_title + '|||'+ seo_keywords + '|||'+  seo_description +'|||'+ h1tag +'|||'+ h2tag +'|||'+ IMG_alt +'|||'+ IMG_rel +'|||'+ window.location.href +'|||'+ window.location.hostname +'|||'+  canonical +'|||'+ noindex +'|||'+ location.pathname; // 11
 
 }

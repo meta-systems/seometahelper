@@ -129,9 +129,9 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         };
         xhr.send(null);
         
-        let H1array = seo_fields[3].split(',');
-        
-        if(H1array[0] == ''){
+        let H1array = seo_fields[3].replace(/,/g, '').split('^');
+        //H1array.replace(",","");w
+        if(!H1array[0]){
             document.querySelector('#h1').innerText = 'H1 is missing!';
             document.querySelector('#h1_p').classList.add('missing');
         }
@@ -145,8 +145,8 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         }
 
         //thats how we create a DOM element without Jquary
-        let H2array = seo_fields[4].split(','); //return array
-
+        let H2array = seo_fields[4].replace(/,/g, '').split('^'); //return array
+         //H2array.replace(","," ");
         //ECMA6 "for" loop
         for (let item of H2array) {
             //create DOM element
