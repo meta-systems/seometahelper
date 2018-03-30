@@ -39,86 +39,63 @@ chrome.tabs.getSelected(null, function(tab) {     //get current tab
     });
 });
 
-//слушаем контент_скрипт(те фактически скуп браузера) выполняем колл-бэк по внешнему запросу
+//listen for call from content_script(browser scope)
 chrome.runtime.onMessage.addListener(function(request, sender) {
     
 	if (request) {
 
-		var seo_fields = request.source.split('|||'); //array made
-        //console.log(seo_fields);
-
-		//message.innerText = request.source;
-        
-        // copy title
-        document.getElementById("copy_title").onclick = function() {
-          document.querySelector('#input_title').select();
-          try {
-            var successful = document.execCommand('copy');
-          } catch(e) {}
-          document.querySelector('#input_title').blur();
-          return false;
-        }
-        
-        // copy description
-        document.getElementById("copy_description").onclick = function() {
-          document.querySelector('#input_description').select();
-          try {
-            var successful = document.execCommand('copy');
-          } catch(e) {}
-          document.querySelector('#input_description').blur();
-          return false;
-        }
+    let POPUPparse = JSON.parse(request.source);
+      //console.log(request.source);
         
         // title
-		document.querySelector('#seo_title').innerText = seo_fields[0];
-		document.querySelector('#input_title').value = seo_fields[0];
-		document.querySelector('#seo_title_count').innerText = seo_fields[0].length;
+		document.querySelector('#seo_title').innerText = POPUPparse.seo_title;
+		document.querySelector('#input_title').value = POPUPparse.seo_title;
+		document.querySelector('#seo_title_count').innerText = POPUPparse.seo_title.length;
         
         // description
-        if(seo_fields[2].length){
-            document.querySelector('#seo_description').innerText = seo_fields[2];
-            document.querySelector('#input_description').value = seo_fields[2];
-            document.querySelector('#seo_description_count').innerText = seo_fields[2].length;
+        if(POPUPparse.seo_description){
+            document.querySelector('#seo_description').innerText = POPUPparse.seo_description;
+            document.querySelector('#input_description').value = POPUPparse.seo_description;
+            document.querySelector('#seo_description_count').innerText = POPUPparse.seo_description.length;
         } else {
             document.querySelector('#seo_description').innerText = 'Description is missing!';
             document.querySelector('#description_p').classList.add('missing');
         }
         
         // keywords
-		if(seo_fields[1].length){
-            document.querySelector('#seo_keywords').innerText = seo_fields[1];
-            document.querySelector('#seo_keywords_count').innerText = seo_fields[1].length;
+		if(POPUPparse.seo_keywords){
+            document.querySelector('#seo_keywords').innerText = POPUPparse.seo_keywords;
+            document.querySelector('#seo_keywords_count').innerText = POPUPparse.seo_keywords.length;
         } else {
             document.querySelector('#keywords_p').classList.add('hidden_tr');
         }
         
         // google cache
 		// http://webcache.googleusercontent.com/search?q=cache:msys.pro/portfolio
-		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+seo_fields[7]);
+		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+POPUPparse.windowlocationhref);
 		
         // robots.txt
-        document.querySelector('#robots').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');
-        document.querySelector('#robots2').setAttribute("href", 'http://'+seo_fields[8]+'/robots.txt');
+        document.querySelector('#robots').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
+        document.querySelector('#robots2').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
         
         // liveinternet
-        document.querySelector('#liveinternet').setAttribute("href", 'http://counter.yadro.ru/values?site='+(seo_fields[8].replace('www.','')));
+        document.querySelector('#liveinternet').setAttribute("href", 'http://counter.yadro.ru/values?site='+(POPUPparse.windowlocationhostname.replace('www.','')));
 
         // canonical
-        if(seo_fields[9].length){
-            document.querySelector('#canonical').innerText = seo_fields[9];
+        if(POPUPparse.canonical){
+            document.querySelector('#canonical').innerText = POPUPparse.canonical;
         } else {
             document.querySelector('#canonical_p').classList.add('hidden_tr');
         }
         
         // noindex
-        //console.log(seo_fields[10]);
-        if(seo_fields[10] == 'true'){
+        if(POPUPparse.noindex == 'true'){
             document.querySelector('#noindex').innerText = 'Indexing is forbidden';
-        };
+        }
         
         
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://msys.pro/robots/index.php?domain="+seo_fields[7]+"&uri="+seo_fields[11]+"");
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://msys.pro/robots/index.php?domain="+POPUPparse.windowlocationhostname+"&uri="+POPUPparse.windowlocationhref+"");
         xhr.onload = function (e) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 if(xhr.responseText == 'denied'){
@@ -128,15 +105,14 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
             }
         };
         xhr.send(null);
-        
-        let H1array = seo_fields[3].replace(/,/g, '').split('^');
-        //H1array.replace(",","");w
-        if(!H1array[0]){
+
+        // h
+        if(!POPUPparse.h1tag.length){
             document.querySelector('#h1').innerText = 'H1 is missing!';
             document.querySelector('#h1_p').classList.add('missing');
         }
         
-        for (let item of H1array) {
+        for (let item of POPUPparse.h1tag) {
             let p_for_H1 = document.createElement('div');
             let p_for_H1_inner = document.createTextNode(item);
             p_for_H1.appendChild(p_for_H1_inner);
@@ -145,10 +121,8 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         }
 
         //thats how we create a DOM element without Jquary
-        let H2array = seo_fields[4].replace(/,/g, '').split('^'); //return array
-         //H2array.replace(","," ");
         //ECMA6 "for" loop
-        for (let item of H2array) {
+        for (let item of POPUPparse.h2tag) {
             //create DOM element
             let p_for_H2 = document.createElement('div');
 
@@ -157,49 +131,67 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
             //fills p with textNode
             p_for_H2.appendChild(p_for_H2_inner);
-
             let h2 = document.querySelector('#h2');
-
             h2.appendChild(p_for_H2);
         }
 
-
-        let IMG_alt_array = seo_fields[5].split(',');
-
-        for (let item of IMG_alt_array) {
+        // img
+          for (let item of POPUPparse.IMG_alt) {
             let IMG_alt_DIV = document.createElement('div');
             let IMG_alt_inner = document.createTextNode(item);
             IMG_alt_DIV.appendChild(IMG_alt_inner);
             let IMG_alt = document.querySelector('#IMG_alt');
-            IMG_alt.appendChild(IMG_alt_DIV);
-        }
+            if(item !== null) {
+              IMG_alt.appendChild(IMG_alt_DIV);
+            }
+          }
 
-        let IMG_rel_array = seo_fields[5].split(',');
-
-        for (let item of IMG_rel_array) {
+          for (let item of POPUPparse.IMG_rel) {
             let IMG_rel_DIV = document.createElement('div');
             let IMG_rel_inner = document.createTextNode(item);
             IMG_rel_DIV.appendChild(IMG_rel_inner);
-            let IMG_rel = document.querySelector('#IMG_alt');
-            IMG_rel.appendChild(IMG_rel_DIV);
-        }
+            let IMG_rel = document.querySelector('#IMG_rel');
+            if(item !== null) {
+              IMG_rel.appendChild(IMG_rel_DIV);
+            }
+          }
+
+      // copy title
+      document.getElementById("copy_title").onclick = function() {
+        document.querySelector('#input_title').select();
+        try {
+          let successful = document.execCommand('copy');
+        } catch(e) {}
+        document.querySelector('#input_title').blur();
+        return false;
+      }
+
+      // copy description
+      document.getElementById("copy_description").onclick = function() {
+        document.querySelector('#input_description').select();
+        try {
+          let successful = document.execCommand('copy');
+        } catch(e) {}
+        document.querySelector('#input_description').blur();
+        return false;
+      }
 
         //self-invoke
 		(function() {
-			var markUp = function() {
-				var keyword = document.getElementsByClassName("keywords")[0].value;
+			let markUp = function() {
+				let keyword = document.getElementsByClassName("keywords")[0].value;
 
 				//this been called on input change
 					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) { //get current tad
-						var port = chrome.tabs.connect(tabs[0].id, { name: "example" });   //call current tad (long-pool)
+						let port = chrome.tabs.connect(tabs[0].id, { name: "example" });   //call current tad (long-pool)
 						port.postMessage(	keyword );
 					});
 
          //mark keyword inside popup
-			    var markInstance = new Mark(document.querySelectorAll("#seo_title, #seo_description, #seo_keywords ,#h1 ,#h2 ,#IMG_alt"));
+			    let markInstance = new Mark(document.querySelectorAll("#seo_title, #seo_description, #seo_keywords, #h1, #h2, #IMG_alt, #IMG_rel"));
 
 					// Determine selected options
-					var options = {
+					let options = {
 					 "separateWordSearch": true
 					};
 
@@ -220,10 +212,10 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 });
 
 
-//Popup not a valid dom element so we need launch its js like this(when popup.html loaded)
+//Popup not a valid dom element so we need invoke its js like this(after popup.html loaded)
 
 function onWindowLoad() {
-	var message = document.querySelector('#seo_title');
+	let message = document.querySelector('#seo_title');
 
 	chrome.tabs.executeScript(null, {
 		//file: "getPagesSource.js"

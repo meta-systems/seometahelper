@@ -43,7 +43,7 @@ function seo_helper(){
 
         if(links[i].getAttribute("rel") != undefined && links[i].getAttribute("rel") == 'canonical'){
             canonical = links[i].getAttribute("href");
-            console.log(canonical);
+            //console.log(canonical);
         }
     }
     var noindex = 'false';
@@ -71,17 +71,33 @@ function seo_helper(){
         
     }
 
-    var h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText + '^' } ); //ECMA6
+    let h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText } ); //ECMA6
 
-    var h2tag = Array.prototype.slice.call( document.getElementsByTagName("h2") ).map( function( e ){ return e.innerText + '^'} ); //ECMA6
+    let h2tag = Array.prototype.slice.call( document.getElementsByTagName("h2") ).map( function( e ){ return e.innerText } ); //ECMA6
 
-    var IMG_alt = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.alt } ); //ECMA6
+    let IMG_alt = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.alt } ); //ECMA6
 
-    var IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
+    let IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
 
-    console.log(typeof(IMG_alt)); console.log(h2tag);
-    return seo_title + '|||'+ seo_keywords + '|||'+  seo_description +'|||'+ h1tag +'|||'+ h2tag +'|||'+ IMG_alt +'|||'+ IMG_rel +'|||'+ window.location.href +'|||'+ window.location.hostname +'|||'+  canonical +'|||'+ noindex +'|||'+ location.pathname; // 11
+     //console.log(seo_title);
 
+    // obj.headers - object of objects
+    let obj = {};
+    obj.seo_title = seo_title;
+    obj.seo_keywords = seo_keywords;
+    obj.seo_description = seo_description;
+    obj.h1tag = h1tag;
+    obj.h2tag = h2tag;
+    obj.IMG_alt = IMG_alt;
+    obj.IMG_rel = IMG_rel;
+    obj.windowlocationhref = window.location.href;
+    obj.windowlocationhostname = window.location.hostname;
+    obj.locationpathname = location.pathname;
+    obj.canonical = canonical;
+    obj.noindex = noindex;
+    let CSjson = JSON.stringify(obj);
+
+    return CSjson;
 }
 
 //sending function result to popup
