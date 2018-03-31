@@ -79,7 +79,7 @@ function seo_helper(){
 
     let IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
 
-     //console.log(seo_title);
+     //console.log(IMG_rel);
 
     // obj.headers - object of objects
     let obj = {};

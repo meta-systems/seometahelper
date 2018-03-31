@@ -136,22 +136,28 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         }
 
         // img
-          for (let item of POPUPparse.IMG_alt) {
+      if( POPUPparse.IMG_alt.every(element => element === null) || POPUPparse.IMG_alt.every(element => element === undefined) ) {
+        document.querySelector('#img_rel_p').classList.add('hidden_tr');
+      } else {
+        for (let item of POPUPparse.IMG_alt) {
+          if (item !== null && item !== 'undefined' && item !== undefined) {
             let IMG_alt_DIV = document.createElement('div');
             let IMG_alt_inner = document.createTextNode(item);
             IMG_alt_DIV.appendChild(IMG_alt_inner);
             let IMG_alt = document.querySelector('#IMG_alt');
-            if(item !== null) {
-              IMG_alt.appendChild(IMG_alt_DIV);
-            }
+            IMG_alt.appendChild(IMG_alt_DIV);
           }
+        }
+      }
 
+      if( POPUPparse.IMG_rel.every(element => element === null) || POPUPparse.IMG_rel.every(element => element === undefined) ) {
+        document.querySelector('#img_rel_p').classList.add('hidden_tr');
+      } else {
           for (let item of POPUPparse.IMG_rel) {
-            let IMG_rel_DIV = document.createElement('div');
-            let IMG_rel_inner = document.createTextNode(item);
-            IMG_rel_DIV.appendChild(IMG_rel_inner);
-            let IMG_rel = document.querySelector('#IMG_rel');
-            if(item !== null) {
+              let IMG_rel_DIV = document.createElement('div');
+              let IMG_rel_inner = document.createTextNode(item);
+              IMG_rel_DIV.appendChild(IMG_rel_inner);
+              let IMG_rel = document.querySelector('#IMG_rel');
               IMG_rel.appendChild(IMG_rel_DIV);
             }
           }
