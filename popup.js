@@ -87,7 +87,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         
         
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://msys.pro/robots/index.php?domain="+POPUPparse.windowlocationhostname+"&uri="+POPUPparse.windowlocationhref+"");
+        xhr.open("GET", "https://msys.pro/robots/index.php?domain="+POPUPparse.windowlocationhref+"&uri="+POPUPparse.locationpathname+"");
         xhr.onload = function (e) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 if(xhr.responseText == 'denied'){

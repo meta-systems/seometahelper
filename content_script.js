@@ -97,6 +97,8 @@ function seo_helper(){
     obj.noindex = noindex;
     let CSjson = JSON.stringify(obj);
 
+    //console.log(location.pathname); console.log(window.location.href);
+
     return CSjson;
 }
 
