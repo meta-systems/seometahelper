@@ -108,10 +108,11 @@ chrome.runtime.sendMessage({
 //lisen for connect then mark from msg
 chrome.runtime.onConnect.addListener(function(port) {
  // console.log('fetch');
+  //console.log(port);
   port.onMessage.addListener(function(msg) {
     //console.log(msg);
      var markInstance = new Mark(document.querySelector("body"));
-
+          //console.log(msg);
         (function (){            //self-invoke
           // fetch keyword
           var keyword = msg;
@@ -134,3 +135,4 @@ chrome.runtime.onConnect.addListener(function(port) {
   });
 });
 
+//console.log("cs online");

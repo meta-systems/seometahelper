@@ -33,16 +33,8 @@ function saveChanges() {
 	});
 }
 
-chrome.tabs.getSelected(null, function(tab) {     //get current tab
-    chrome.tabs.sendRequest(tab.id, {greeting: "hello", data: document.getElementsByClassName("keywords")[0].value}, function(response) {
-       //alert(response.farewell);
-    });
-});
-
 //listen for call from content_script(browser scope)
 chrome.runtime.onMessage.addListener(function(request, sender) {
-    
-	if (request) {
 
     let POPUPparse = JSON.parse(request.source);
       //console.log(request.source);
@@ -182,11 +174,10 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         return false;
       }
 
-        //self-invoke
-		(function() {
+        //call for
 			let markUp = function() {
 				let keyword = document.getElementsByClassName("keywords")[0].value;
-
+        console.log(keyword);
 				//this been called on input change
 					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) { //get current tad
 						let port = chrome.tabs.connect(tabs[0].id, { name: "example" });   //call current tad (long-pool)
@@ -208,15 +199,14 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 					   markInstance.mark(keyword, options);
 					 }
 					});
-
 				saveChanges();
 			};
-			markUp();
-			document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //callback by keyup
-		})();
-	}
+
+    document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //callback by keyup
+
 });
 
+console.log("bg online");
 
 //Popup not a valid dom element so we need invoke its js like this(after popup.html loaded)
 
@@ -236,7 +226,9 @@ function onWindowLoad() {
 
 window.onload = onWindowLoad;
 
-// p_for_H2 = document.createElement('p')
-// p_for_H2.innerText = "123";
-// var h2 = document.querySelector('.views-feed .view-header div h2')
-// h2.append=p_for_H2 ;
+// its first call for "keywords" from NN -- obsolete
+// chrome.tabs.getSelected(null, function(tab) {     //get current tab
+//   chrome.tabs.sendRequest(tab.id, {greeting: "hello", data: document.getElementsByClassName("keywords")[0].value}, function(response) {
+//     //alert(response.farewell);
+//   });
+// });
