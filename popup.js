@@ -43,6 +43,11 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		document.querySelector('#seo_title').innerText = POPUPparse.seo_title;
 		document.querySelector('#input_title').value = POPUPparse.seo_title;
 		document.querySelector('#seo_title_count').innerText = POPUPparse.seo_title.length;
+
+        // noindex
+		if(POPUPparse.noindex) {
+            document.querySelector('#indexing_m').classList.add('show_tr');
+        }
         
         // description
         if(POPUPparse.seo_description){
@@ -79,12 +84,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         } else {
             document.querySelector('#canonical_p').classList.add('hidden_tr');
         }
-        
-        // noindex
-        if(POPUPparse.noindex == 'true'){
-            document.querySelector('#noindex').innerText = 'Indexing is forbidden';
-        }
-        
+
         
         let xhr = new XMLHttpRequest();
         xhr.open("GET", "https://msys.pro/robots/index.php?domain="+POPUPparse.windowlocationhref+"&uri="+POPUPparse.locationpathname+"");

@@ -46,7 +46,7 @@ function seo_helper(){
             //console.log(canonical);
         }
     }
-    var noindex = 'false';
+    var noindex = false;
 
     //getElements returns last element is irrelevant we disband it
     for(var i = metas.length -1; i >= 0 ; i--){

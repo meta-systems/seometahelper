@@ -108,15 +108,15 @@
             margin-left:7px;
             text-decoration:none;
         }
-        #indexing_p{
+        .indexing_tr {
             display:none;
         }
-        #indexing_p.show_tr{
+        .indexing_tr.show_tr {
             display:table-row;
         }
         .missing .td2,
-        #indexing_p .td2,
-        #indexing_p .td2 a {
+        .indexing_tr .td2,
+        .indexing_tr .td2 a {
             color:#dd0000;
         }
 
@@ -152,7 +152,8 @@
 	<tr id="description_p"><td class="td1">Description <span id='seo_description_count' class="count" title="Number of characters"></span></td><td class="td2"><span id='seo_description'></span> <a href="#" id="copy_description" class="copy" title="Copy text"><img src="copy.svg" width="15"/></a></a></td></tr>
 	<tr id="keywords_p"><td class="td1">Keywords <span id='seo_keywords_count' class="count" title="Number of characters"></span></td><td class="td2"><div id='seo_keywords'></div></td></tr>
 	<tr id="canonical_p"><td class="td1">Canonical</td><td class="td2"><div id='canonical'></div></td></tr>
-	<tr id="indexing_p"><td class="td1">Indexing</td><td class="td2">indexing disallowed by <a href="#" id="robots2" target="_blank">robots.txt</a></td></tr>
+    <tr id="indexing_p" class="indexing_tr"><td class="td1">Indexing</td><td class="td2">Indexing disallowed by <a href="#" id="robots2" target="_blank">robots.txt</a></td></tr>
+    <tr id="indexing_m" class="indexing_tr"><td class="td1">Indexing</td><td class="td2">Indexing disallowed by metatag</td></tr>
     <tr id="h1_p"><td class="td1">H1</td><td class="td2"><div id='h1'></div></td></tr>
     <tr><td class="td1">H2</td><td class="td2"><div id='h2'></div></td></tr>
     <tr id="img_alt_p"><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt'></div></td></tr>
