@@ -71,6 +71,14 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 		// http://webcache.googleusercontent.com/search?q=cache:msys.pro/portfolio
 		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+POPUPparse.windowlocationhref);
 		
+        // Yandex index
+        document.querySelector('#yandex_index').setAttribute("href", 'https://yandex.ru/search/?text=site:'+POPUPparse.windowlocationhostname+'');
+
+        // Google index
+        document.querySelector('#google_index').setAttribute("href", 'https://www.google.com/search?q=site:'+POPUPparse.windowlocationhostname+'');
+
+        // sitemap.xml
+        document.querySelector('#sitemap').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/sitemap.xml');
         // robots.txt
         document.querySelector('#robots').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
         document.querySelector('#robots2').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
