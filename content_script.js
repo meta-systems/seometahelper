@@ -15,10 +15,11 @@ function seo_helper(){
     var seo_title = '',
         seo_keywords = '',
         seo_description = '';
-
-
-    if(document.getElementsByTagName("title")[0].innerHTML != undefined){
-        seo_title = document.getElementsByTagName("title")[0].innerHTML;  //array of DOM elements return
+    var tag_title;
+    if(tag_title = document.getElementsByTagName("title")){
+        if(tag_title[0].innerHTML != undefined){
+            seo_title = tag_title[0].innerText;  //array of DOM elements return
+        }
     }
 
     var metas = document.getElementsByTagName("meta"); //array of DOM elements return

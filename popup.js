@@ -11,86 +11,115 @@
 //plugin scope -- function scope didnt work right
 
 chrome.storage.sync.get("keywords", function (obj) {
-    if(obj.keywords !=undefined){
-      document.getElementsByClassName("keywords")[0].value = obj.keywords; //populate form from saved object
-      window.sendtocs1 = document.getElementsByClassName("keywords")[0].value;
-	}
+  var keyword_input = document.getElementsByClassName("keywords");
+  if (keyword_input.length && obj.keywords != undefined) {
+    keyword_input[0].value = obj.keywords; //populate form from saved object   
+    window.sendtocs1 = keyword_input[0].value;
+  }  
 });
 
-function saveChanges() {
-
+function saveChanges(keyword) {
+  console.log(keyword);
 	// Get a value saved in a form.
-	var theValue = document.getElementsByClassName("keywords")[0].value;
+	var theValue = keyword;
 	// Check that there's some code there.
-	if (!theValue) {
-		//message('Error: No value specified');
-		return;
+  console.log(theValue);
+  if (!theValue) {
+      chrome.storage.sync.remove('keywords', function() {
+      
+      });
+      return;
 	}
 	// Save it using the Chrome extension storage API.
 	chrome.storage.sync.set({'keywords': theValue}, function() {
-		// Notify that we saved.
-		//message('Settings saved');
-	});
+	
+  });
 }
 
 //listen for call from content_script(browser scope)
 chrome.runtime.onMessage.addListener(function(request, sender) {
 
     let POPUPparse = JSON.parse(request.source);
-      //console.log(request.source);
-        
-        // title
-		document.querySelector('#seo_title').innerText = POPUPparse.seo_title;
-		document.querySelector('#input_title').value = POPUPparse.seo_title;
-		document.querySelector('#seo_title_count').innerText = POPUPparse.seo_title.length;
+      // title
+      var seo_title, input_title, seo_title_count, seo_descr, input_descr, seo_descr_length, keywords_p, noindex;
+      if (seo_title = document.querySelector('#seo_title'))
+      seo_title.innerText = POPUPparse.seo_title;
+
+      if (input_title = document.querySelector('#input_title')){
+        input_title.value = POPUPparse.seo_title;
+      }
+      if (seo_title_count = document.querySelector('#seo_title_count')) {
+        seo_title_count.innerText = POPUPparse.seo_title.length;
+      }
 
         // noindex
-		if(POPUPparse.noindex) {
-            document.querySelector('#indexing_m').classList.add('show_tr');
+  if (POPUPparse.noindex) {
+      if(noindex = document.querySelector('#indexing_m'))
+            noindex.classList.add('show_tr');
         }
         
         // description
         if(POPUPparse.seo_description){
-            document.querySelector('#seo_description').innerText = POPUPparse.seo_description;
-            document.querySelector('#input_description').value = POPUPparse.seo_description;
-            document.querySelector('#seo_description_count').innerText = POPUPparse.seo_description.length;
+            if(seo_descr = document.querySelector('#seo_description'))
+            seo_descr.innerText = POPUPparse.seo_description;
+          
+            if(input_descr = document.querySelector('#input_description'))
+            input_descr.value = POPUPparse.seo_description;
+          
+            if(seo_descr_length = document.querySelector('#seo_description_count'))
+            seo_descr_length.innerText = POPUPparse.seo_description.length;
         } else {
-            document.querySelector('#seo_description').innerText = 'Description is missing!';
+            if(seo_descr)
+            seo_descr.innerText = 'Description is missing!';
+            
+            if(keywords_p = document.querySelector('#description_p'))
             document.querySelector('#description_p').classList.add('missing');
         }
         
         // keywords
-		if(POPUPparse.seo_keywords){
+		    if(POPUPparse.seo_keywords){
             document.querySelector('#seo_keywords').innerText = POPUPparse.seo_keywords;
             document.querySelector('#seo_keywords_count').innerText = POPUPparse.seo_keywords.length;
         } else {
+          if(keywords_p = document.querySelector('#description_p'))
             document.querySelector('#keywords_p').classList.add('hidden_tr');
         }
         
         // google cache
 		// http://webcache.googleusercontent.com/search?q=cache:msys.pro/portfolio
-		document.querySelector('#google_cache').setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:"+POPUPparse.windowlocationhref);
+  var cache_google, cache_yandex, google_index, sitemap, robots, robots2, liveinternet, canonical;
+        if(cache_google = document.querySelector('#google_cache'))
+        cache_google.setAttribute("href", "http://webcache.googleusercontent.com/search?q=cache:" + POPUPparse.windowlocationhref);
 		
         // Yandex index
-        document.querySelector('#yandex_index').setAttribute("href", 'https://yandex.ru/search/?text=site:'+POPUPparse.windowlocationhostname+'');
+        if(cache_yandex = document.querySelector('#yandex_index'))
+        cache_yandex.setAttribute("href", 'https://yandex.ru/search/?text=site:'+POPUPparse.windowlocationhostname+'');
 
         // Google index
-        document.querySelector('#google_index').setAttribute("href", 'https://www.google.com/search?q=site:'+POPUPparse.windowlocationhostname+'');
+        if(google_index = document.querySelector('#google_index'))
+        google_index.setAttribute("href", 'https://www.google.com/search?q=site:'+POPUPparse.windowlocationhostname+'');
 
         // sitemap.xml
-        document.querySelector('#sitemap').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/sitemap.xml');
+        if(sitemap = document.querySelector('#sitemap'))
+        sitemap.setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/sitemap.xml');
         // robots.txt
-        document.querySelector('#robots').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
-        document.querySelector('#robots2').setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
+        if(robots = document.querySelector('#robots'))
+        robots.setAttribute("href", 'http://' + POPUPparse.windowlocationhostname + '/robots.txt');
+
+        if(robots2 = document.querySelector('#robots2'))  
+        robots2.setAttribute("href", 'http://'+POPUPparse.windowlocationhostname+'/robots.txt');
         
         // liveinternet
-        document.querySelector('#liveinternet').setAttribute("href", 'http://counter.yadro.ru/values?site='+(POPUPparse.windowlocationhostname.replace('www.','')));
+        if(liveinternet = document.querySelector('#liveinternet'))
+        liveinternet.setAttribute("href", 'http://counter.yadro.ru/values?site='+(POPUPparse.windowlocationhostname.replace('www.','')));
 
         // canonical
         if(POPUPparse.canonical){
-            document.querySelector('#canonical').innerText = POPUPparse.canonical;
+            if(canonical = document.querySelector('#canonical'))
+            canonical.innerText = POPUPparse.canonical;
         } else {
-            document.querySelector('#canonical_p').classList.add('hidden_tr');
+            if(canonical = document.querySelector('#canonical'))
+            canonical.classList.add('hidden_tr');
         }
 
         
@@ -107,16 +136,20 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         xhr.send(null);
 
         // h
-        if(!POPUPparse.h1tag.length){
-            document.querySelector('#h1').innerText = 'H1 is missing!';
-            document.querySelector('#h1_p').classList.add('missing');
-        }
+  if (!POPUPparse.h1tag.length) {
+    var h1_tag, h1_tag_p;
+    if(h1_tag = document.querySelector('#h1'))
+      h1_tag.innerText = 'H1 is missing!';
+    if(h1_tag_p = document.querySelector('#h1_p'))
+      h1_tag_p.classList.add('missing');    
+  }
         
         for (let item of POPUPparse.h1tag) {
             let p_for_H1 = document.createElement('div');
             let p_for_H1_inner = document.createTextNode(item);
             p_for_H1.appendChild(p_for_H1_inner);
-            let h1 = document.querySelector('#h1');
+          let h1 = document.querySelector('#h1');
+            if(h1)
             h1.appendChild(p_for_H1);
         }
 
@@ -131,13 +164,16 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
             //fills p with textNode
             p_for_H2.appendChild(p_for_H2_inner);
-            let h2 = document.querySelector('#h2');
+          let h2 = document.querySelector('#h2');
+          if(h2)
             h2.appendChild(p_for_H2);
         }
 
         // img
-      if( POPUPparse.IMG_alt.every(element => element === null) || POPUPparse.IMG_alt.every(element => element === undefined) ) {
-        document.querySelector('#img_rel_p').classList.add('hidden_tr');
+  if (POPUPparse.IMG_alt.every(element => element === null) || POPUPparse.IMG_alt.every(element => element === undefined)) {
+      var img_rel_p;    
+      if (img_rel_p =  document.querySelector('#img_rel_p'))
+        img_rel_p.classList.add('hidden_tr');
       } else {
         for (let item of POPUPparse.IMG_alt) {
           if (item !== null && item !== 'undefined' && item !== undefined) {
@@ -145,25 +181,31 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
             let IMG_alt_inner = document.createTextNode(item);
             IMG_alt_DIV.appendChild(IMG_alt_inner);
             let IMG_alt = document.querySelector('#IMG_alt');
+            if(IMG_alt)
             IMG_alt.appendChild(IMG_alt_DIV);
           }
         }
       }
 
-      if( POPUPparse.IMG_rel.every(element => element === null) || POPUPparse.IMG_rel.every(element => element === undefined) ) {
-        document.querySelector('#img_rel_p').classList.add('hidden_tr');
+  if (POPUPparse.IMG_rel.every(element => element === null) || POPUPparse.IMG_rel.every(element => element === undefined)) {
+    var img_rel_p;
+      if(img_rel_p = document.querySelector('#img_rel_p'))
+        img_rel_p.classList.add('hidden_tr');
       } else {
           for (let item of POPUPparse.IMG_rel) {
               let IMG_rel_DIV = document.createElement('div');
               let IMG_rel_inner = document.createTextNode(item);
               IMG_rel_DIV.appendChild(IMG_rel_inner);
-              let IMG_rel = document.querySelector('#IMG_rel');
+            let IMG_rel = document.querySelector('#IMG_rel');
+            if(IMG_rel)
               IMG_rel.appendChild(IMG_rel_DIV);
             }
           }
 
       // copy title
-      document.getElementById("copy_title").onclick = function() {
+  var copy_title_elem, copy_description, keyword_listener;
+  if (copy_title_elem = document.getElementById("copy_title")) { 
+      copy_title_elem.onclick = function() {
         document.querySelector('#input_title').select();
         try {
           let successful = document.execCommand('copy');
@@ -171,9 +213,11 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         document.querySelector('#input_title').blur();
         return false;
       }
+    }
 
       // copy description
-      document.getElementById("copy_description").onclick = function() {
+  if(copy_description = document.getElementById("copy_description")){
+      copy_description.onclick = function() {
         document.querySelector('#input_description').select();
         try {
           let successful = document.execCommand('copy');
@@ -181,7 +225,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         document.querySelector('#input_description').blur();
         return false;
       }
-
+  }
         //call for
 			let markUp = function() {
 				let keyword = document.getElementsByClassName("keywords")[0].value;
@@ -207,29 +251,27 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 					   markInstance.mark(keyword, options);
 					 }
 					});
-				saveChanges();
+				saveChanges(keyword);
 			};
-
+  if (document.getElementsByClassName("keywords").length != 0)
     document.getElementsByClassName("keywords")[0].addEventListener('keyup', markUp); //callback by keyup
 
 });
-
-console.log("bg online");
-
 //Popup not a valid dom element so we need invoke its js like this(after popup.html loaded)
 
 function onWindowLoad() {
 	let message = document.querySelector('#seo_title');
-
-	chrome.tabs.executeScript(null, {
-		//file: "getPagesSource.js"
-		file: "content_script.js"
-	}, function() {
-		// If you try and inject into an extensions page or the webstore/NTP you'll get an error
-		if (chrome.runtime.lastError) {
-			message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
-		}
-	});
+  if(message != null){
+    chrome.tabs.executeScript(null, {
+      //file: "getPagesSource.js"
+      file: "content_script.js"
+    }, function() {
+      // If you try and inject into an extensions page or the webstore/NTP you'll get an error
+      if (chrome.runtime.lastError) {
+        message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+      }
+      });
+  }
 }
 
 window.onload = onWindowLoad;
