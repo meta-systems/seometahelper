@@ -82,12 +82,13 @@
 
         .keywords {
             width:586px;
-            margin-bottom:10px;
             border:1px solid #bbb;
             font-size: 15px;
             font-family:arial;
             padding: 3px 5px;
             height: 18px;
+             border-radius: 4px;
+            outline: none;
         }
 
         .keywords::placeholder {
@@ -135,9 +136,17 @@
         .td2:hover .copy:hover {
             opacity:1;
         }
-        .keywords{
-            border-radius: 4px;
-            outline: none;
+        .keyword_parent{
+            position: relative;
+            margin-bottom: 10px
+        }
+        .clear_keywords{
+            position: absolute;
+            right: 10px;
+            top:0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
         }
     </style>
     <title>SEO meta helper</title>
@@ -152,7 +161,10 @@
     <!-- <a href="#" class="tool" id="google_cache" target="_blank">Google cache</a> -->
 </div>
 <div class="input_label">Keywords to highlight:</div>
-<textarea name="keyword" class="keywords" autofocus ></textarea>
+<div class="keyword_parent">
+    <textarea name="keyword" class="keywords" autofocus ></textarea>
+    <span class="clear_keywords" onclick="clearKeywords()">×</span>
+</div>
 
 <input type="text" class="input_copy" id="input_title" value=""/>
 <input type="text" class="input_copy" id="input_description" value=""/>

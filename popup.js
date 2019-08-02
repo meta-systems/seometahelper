@@ -274,6 +274,10 @@ function onWindowLoad() {
   }
 }
 
+function clearKeywords() {
+  
+}
+
 window.onload = onWindowLoad;
 
 // its first call for "keywords" from NN -- obsolete
