@@ -39,6 +39,10 @@
             border-collapse:collapse;
         }
 
+        table tr.marked{
+            background: #e1f1fd !important;
+        }
+
         .hidden_tr {
             display:none;
         }
@@ -46,10 +50,15 @@
         table tr:hover {
             background:#f5f5f5;
         }
-
+        table tr{
+            border-top:1px solid #eee;
+        }
         table td {
-            padding:8px;
-            border-bottom:1px solid #eee;
+            padding:8px;           
+        }
+
+        table tr:first-child{
+            border-top: 0;
         }
 
         .td1 {
@@ -147,6 +156,13 @@
             bottom: 0;
             display: flex;
             align-items: center;
+            font-size: 20px;
+            z-index: 10;
+            cursor: pointer;
+            display: none;
+        }
+        .clear_keywords.show{
+            display: flex
         }
     </style>
     <title>SEO meta helper</title>
@@ -163,7 +179,7 @@
 <div class="input_label">Keywords to highlight:</div>
 <div class="keyword_parent">
     <textarea name="keyword" class="keywords" autofocus ></textarea>
-    <span class="clear_keywords" onclick="clearKeywords()">×</span>
+    <span class="clear_keywords">&#215;</span>
 </div>
 
 <input type="text" class="input_copy" id="input_title" value=""/>
