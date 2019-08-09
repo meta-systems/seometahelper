@@ -33,7 +33,6 @@ function seo_helper(){
             seo_description = metas[i].getAttribute("content");
         }
     }
-
     
     
     // CANONICAL
@@ -74,6 +73,10 @@ function seo_helper(){
     let h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText } ); //ECMA6
 
     let h2tag = Array.prototype.slice.call( document.getElementsByTagName("h2") ).map( function( e ){ return e.innerText } ); //ECMA6
+    let h3tag = Array.prototype.slice.call( document.getElementsByTagName("h3") ).map( function( e ){ return e.innerText } ); //ECMA6
+    let h4tag = Array.prototype.slice.call( document.getElementsByTagName("h4") ).map( function( e ){ return e.innerText } ); //ECMA6
+    let h5tag = Array.prototype.slice.call( document.getElementsByTagName("h5") ).map( function( e ){ return e.innerText } ); //ECMA6
+    let h6tag = Array.prototype.slice.call( document.getElementsByTagName("h6") ).map( function( e ){ return e.innerText } ); //ECMA6
 
     let IMG_alt = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.alt } ); //ECMA6
 
@@ -88,6 +91,10 @@ function seo_helper(){
     obj.seo_description = seo_description;
     obj.h1tag = h1tag;
     obj.h2tag = h2tag;
+    obj.h3tag = h3tag;
+    obj.h4tag = h4tag;
+    obj.h5tag = h5tag;
+    obj.h6tag = h6tag;
     obj.IMG_alt = IMG_alt;
     obj.IMG_rel = IMG_rel;
     obj.windowlocationhref = window.location.href;
@@ -99,42 +106,51 @@ function seo_helper(){
 
     //console.log(location.pathname); console.log(window.location.href);
 
+    
     return CSjson;
 }
 
 //sending function result to popup
 chrome.runtime.sendMessage({
-    source: seo_helper()
+    source: seo_helper(), 
 });
+
+
+function highlightLinks(){
+    var links = document.getElementsByTagName('a');
+    Array.from(links).forEach(function(element){
+        var herfAttr = element.getAttribute('href');
+        var relAttr = element.getAttribute('rel');
+        if(herfAttr !== '' && herfAttr !== '#'){
+            if(relAttr !== 'nofollow')
+                element.classList.add('links_item_for_seometahelper');
+            else
+                element.classList.add('links_item_for_seometahelper','nofollow');
+        }
+           
+    });
+}
 
 //lisen for connect then mark from msg
 chrome.runtime.onConnect.addListener(function(port) {
- // console.log('fetch');
-  //console.log(port);
   port.onMessage.addListener(function(msg) {
-    //console.log(msg);
      var markInstance = new Mark(document.querySelector("body"));
-          //console.log(msg);
         (function (){            //self-invoke
           // fetch keyword
           var keyword = msg;
-
           // Determine selected options
           var options = {
             "separateWordSearch": true,
-              "className": "markMark",
+            "className": "markMark",
           };
-
           // Remove previous marked elements and mark
-          // the new keyword inside the context
+          // the new keyword inside the context                 
           markInstance.unmark({
             done: function(){
               markInstance.mark(keyword, options);
+              highlightLinks();
             }
           });
         })();
-
   });
 });
-
-//console.log("cs online");

@@ -7,3 +7,11 @@
 	padding-right:2px;
 	color:black;
 }
+
+.links_item_for_seometahelper{
+	border: 1px solid red !important;
+}
+
+.links_item_for_seometahelper.nofollow{
+	text-decoration: line-through;
+}

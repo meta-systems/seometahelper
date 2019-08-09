@@ -35,18 +35,19 @@ function saveChanges(keyword) {
 
 //listen for call from content_script(browser scope)
 chrome.runtime.onMessage.addListener(function(request, sender) {
-
   let POPUPparse = JSON.parse(request.source);
     // title
   var seo_title, input_title, seo_title_count, seo_descr, input_descr, seo_descr_length, keywords_p, noindex;
-  if (seo_title = document.querySelector('#seo_title'))
-  seo_title.innerText = POPUPparse.seo_title;
+  if(POPUPparse.seo_title.length !== 0){
+    if (seo_title = document.querySelector('#seo_title'))
+      seo_title.innerText = POPUPparse.seo_title;
 
-  if (input_title = document.querySelector('#input_title')){
-    input_title.value = POPUPparse.seo_title;
-  }
-  if (seo_title_count = document.querySelector('#seo_title_count')) {
-    seo_title_count.innerText = POPUPparse.seo_title.length;
+    if (input_title = document.querySelector('#input_title')){
+      input_title.value = POPUPparse.seo_title;
+    }
+    if (seo_title_count = document.querySelector('#seo_title_count')) {
+      seo_title_count.innerText = POPUPparse.seo_title.length;
+    }
   }
 
         // noindex
@@ -116,6 +117,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
   if(POPUPparse.canonical){
       if(canonical = document.querySelector('#canonical'))
       canonical.innerText = POPUPparse.canonical;
+      canonical.setAttribute('href', POPUPparse.canonical);
   } else {
       if(canonical = document.querySelector('#canonical'))
       canonical.classList.add('hidden_tr');
@@ -154,6 +156,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
   //thats how we create a DOM element without Jquary
   //ECMA6 "for" loop
+  //H2
   for (let item of POPUPparse.h2tag) {
       //create DOM element
       let p_for_H2 = document.createElement('div');
@@ -166,6 +169,83 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     let h2 = document.querySelector('#h2');
     if(h2)
       h2.appendChild(p_for_H2);
+    let header_table_row = document.querySelector('.header2');
+    if(header_table_row)
+    header_table_row.classList.remove('headers');
+  }
+
+  //H3
+  for (let item of POPUPparse.h3tag) {
+      //create DOM element
+      let p_for_H3 = document.createElement('div');
+
+      //create textNode element
+      let p_for_H3_inner = document.createTextNode(item);
+
+      //fills p with textNode
+      p_for_H3.appendChild(p_for_H3_inner);
+      let h3 = document.querySelector('#h3');
+
+    if(h3)
+      h3.appendChild(p_for_H3);
+      let header_table_row = document.querySelector('.header3');
+      if(header_table_row)
+      header_table_row.classList.remove('headers');
+  }
+  //H4
+  for (let item of POPUPparse.h4tag) {
+    //create DOM element
+    let p_for_H4 = document.createElement('div');
+
+    //create textNode element
+    let p_for_H4_inner = document.createTextNode(item);
+
+    //fills p with textNode
+    p_for_H4.appendChild(p_for_H4_inner);
+    let h4 = document.querySelector('#h4');
+
+    if(h4)
+      h4.appendChild(p_for_H4);
+    let header_table_row = document.querySelector('.header4');
+    if(header_table_row)
+    header_table_row.classList.remove('headers');
+  }
+   //H5
+   for (let item of POPUPparse.h5tag) {
+    //create DOM element
+    let p_for_H5 = document.createElement('div');
+
+    //create textNode element
+    let p_for_H5_inner = document.createTextNode(item);
+
+    //fills p with textNode
+    p_for_H5.appendChild(p_for_H5_inner);
+    let h5 = document.querySelector('#h5');
+
+    if(h5)
+      h5.appendChild(p_for_H5);
+    let header_table_row = document.querySelector('.header5');
+    if(header_table_row)
+    header_table_row.classList.remove('headers');
+  }
+
+   //H5
+   for (let item of POPUPparse.h6tag) {
+    //create DOM element
+    let p_for_H6 = document.createElement('div');
+
+    //create textNode element
+    let p_for_H6_inner = document.createTextNode(item);
+
+    //fills p with textNode
+    p_for_H6.appendChild(p_for_H6_inner);
+    let h6 = document.querySelector('#h6');
+
+    if(h6)
+      h6.appendChild(p_for_H6);
+    let header_table_row = document.querySelector('.header6');
+    if(header_table_row)
+    header_table_row.classList.remove('headers');
   }
 
   // img
@@ -241,7 +321,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
     // Determine selected options
     let options = {
-      "separateWordSearch": true
+      "separateWordSearch": true,
     };
 
     // Remove previous marked elements and mark
@@ -251,6 +331,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         markInstance.mark(keyword, options);
       }
     });
+    
     saveChanges(keyword);
     ShowClearButton();
   };
@@ -272,6 +353,10 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     }   
   }
   
+  
+  var textAreaKeyWords = document.getElementsByClassName("clear_keywords")[0];
+  if(typeof textAreaKeyWords !== 'undefined')
+    textAreaKeyWords.addEventListener("click", ClearKeywords);
   function ClearKeywords() {
     var textarea = document.getElementsByClassName('keywords')[0];
     textarea.value = '';
@@ -280,10 +365,21 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     saveChanges();
     markUp();
   }
+  function CheckCopyButtonDisplay(){
+    var title_elem, descr_elem;
+    if(title_elem = document.getElementById('seo_title'))
+      title = title_elem.innerHTML;
+    if(descr_elem = document.getElementById('seo_description'))
+      descr = descr_elem.innerHTML;
+    if(title.length === 0 && title === ""){
+      document.getElementById('copy_title').classList.add('hide');
+    }
+    if(descr.length === 0 && descr === ""){
+      document.getElementById('copy_description').classList.add('hide');
+    }
+  }
   ShowClearButton();
-  var textAreaKeyWords = document.getElementsByClassName("clear_keywords")[0];
-  if(typeof textAreaKeyWords !== 'undefined')
-    textAreaKeyWords.addEventListener("click", ClearKeywords);
+  CheckCopyButtonDisplay();
 });
 //Popup not a valid dom element so we need invoke its js like this(after popup.html loaded)
 
@@ -301,6 +397,7 @@ function onWindowLoad() {
       });
   }
   initListenForTableRows();
+  
 }
 
 var tableRows = document.getElementsByTagName("tr");
@@ -316,6 +413,8 @@ function MarkTableRow(){
   }
   this.classList.add('marked');
 }
+
+
 
 window.onload = onWindowLoad;
 
