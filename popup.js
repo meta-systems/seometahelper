@@ -307,6 +307,13 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       return false;
     }
   }
+  if(POPUPparse.count_ul){
+    document.getElementById('ul_count').innerText = POPUPparse.count_ul;
+    document.getElementById('ol_count').innerText = POPUPparse.count_ol;
+    document.getElementById('table_count').innerText = POPUPparse.count_table;
+    document.getElementById('links_count').innerText = POPUPparse.count_links;
+    console.log("ul: " + POPUPparse.count_ul, " ol: " + POPUPparse.count_ol, " table: " + POPUPparse.count_table, " links: " + POPUPparse.count_links);
+  }
   //call for
   var markUp = function() {
     let keyword = document.getElementsByClassName("keywords")[0].value;
@@ -366,11 +373,8 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     markUp();
   }
   function CheckCopyButtonDisplay(){
-    var title_elem, descr_elem;
-    if(title_elem = document.getElementById('seo_title'))
-      title = title_elem.innerHTML;
-    if(descr_elem = document.getElementById('seo_description'))
-      descr = descr_elem.innerHTML;
+    var title = document.getElementById('seo_title').innerHTML;
+    var descr = document.getElementById('seo_description').innerHTML;
     if(title.length === 0 && title === ""){
       document.getElementById('copy_title').classList.add('hide');
     }

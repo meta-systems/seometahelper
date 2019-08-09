@@ -82,6 +82,11 @@ function seo_helper(){
 
     let IMG_rel = Array.prototype.slice.call( document.getElementsByTagName("img") ).map( function( e ){ return e.rel } ); //ECMA6
 
+    let count_ul =  document.getElementsByTagName("ul").length;
+    let count_ol = document.getElementsByTagName("ol").length;
+    let count_links = document.getElementsByTagName("a").length;
+    let count_table = document.getElementsByTagName("table").length;
+
      //console.log(IMG_rel);
 
     // obj.headers - object of objects
@@ -102,6 +107,10 @@ function seo_helper(){
     obj.locationpathname = location.pathname;
     obj.canonical = canonical;
     obj.noindex = noindex;
+    obj.count_ul = count_ul;
+    obj.count_ol = count_ol;
+    obj.count_links = count_links;
+    obj.count_table = count_table;
     let CSjson = JSON.stringify(obj);
 
     //console.log(location.pathname); console.log(window.location.href);

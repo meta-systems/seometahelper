@@ -174,7 +174,9 @@
         .headers{
             display: none;
         }
-        
+        .counts_elem{
+            padding-left: 10px
+        }
     </style>
     <title>SEO meta helper</title>
 </head>
@@ -212,8 +214,14 @@
     <tr class="headers header6"><td class="td1">H6</td><td class="td2"><div id='h6' class="header_content_block"></div></td></tr>
     <tr id="img_alt_p"><td class="td1">IMG_alt</td><td class="td2"><div id='IMG_alt' class="header_content_block"></div></td></tr>
     <tr id="img_rel_p"><td class="td1">IMG_rel</td><td class="td2"><div id='IMG_rel' class="header_content_block"></div></td></tr>
-    
 </table>
+
+<div class="counts_elem">
+    <span>ul: <b id="ul_count"></b></span>
+    <span>ol: <b id="ol_count"></b></span>
+    <span>table: <b id="table_count"></b></span>
+    <span>links: <b id="links_count"></b></span>
+</div>
 
 <script src="popup.js"></script>
 </body>
