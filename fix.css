@@ -15,3 +15,10 @@
 .links_item_for_seometahelper.nofollow{
 	text-decoration: line-through;
 }
+.lists_item_for_seometahelper{
+	border: 1px solid green !important;
+}
+
+.lists_item_for_seometahelper.nofollow{
+	text-decoration: line-through;
+}
