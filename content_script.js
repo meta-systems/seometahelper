@@ -33,12 +33,12 @@ function seo_helper(){
             seo_description = metas[i].getAttribute("content");
         }
     }
-    
-    
+
+
     // CANONICAL
     var links = document.getElementsByTagName("link");
     var canonical = '';
-    for(i = 0; i < links.length; i++) { 
+    for(i = 0; i < links.length; i++) {
 
         if(links[i].getAttribute("rel") != undefined && links[i].getAttribute("rel") == 'canonical'){
             canonical = links[i].getAttribute("href");
@@ -49,7 +49,7 @@ function seo_helper(){
 
     //getElements returns last element is irrelevant we disband it
     for(var i = metas.length -1; i >= 0 ; i--){
-        
+
         // keywords
         if(metas[i].getAttribute("name") != undefined && metas[i].getAttribute("name") == 'keywords'){
             seo_keywords = metas[i].getAttribute("content");
@@ -59,15 +59,15 @@ function seo_helper(){
         if(metas[i].getAttribute("name") != undefined && metas[i].getAttribute("name") == 'description'){
             seo_description = metas[i].getAttribute("content");
         }
-        
-        // noindex 
+
+        // noindex
         // <meta name="robots" content="noindex">
         if(metas[i].getAttribute("name") != undefined && metas[i].getAttribute("name") == 'robots'){
             if (metas[i].getAttribute("content") == 'noindex'){
-                noindex = true;                
+                noindex = true;
             }
         }
-        
+
     }
 
     let h1tag = Array.prototype.slice.call( document.getElementsByTagName("h1") ).map( function( e ){ return e.innerText } ); //ECMA6
@@ -115,13 +115,13 @@ function seo_helper(){
 
     //console.log(location.pathname); console.log(window.location.href);
 
-    
+
     return CSjson;
 }
 
 //sending function result to popup
 chrome.runtime.sendMessage({
-    source: seo_helper(), 
+    source: seo_helper(),
 });
 
 
@@ -136,7 +136,21 @@ function highlightLinks(){
             else
                 element.classList.add('links_item_for_seometahelper','nofollow');
         }
-           
+
+    });
+  }
+function highlightLists(){
+    var lists = document.getElementsByTagName('ul');
+    Array.from(lists).forEach(function(element){
+        var herfAttr = element.getAttribute('href');
+        var relAttr = element.getAttribute('rel');
+        if(herfAttr !== '' && herfAttr !== '#'){
+            if(relAttr !== 'nofollow')
+                element.classList.add('lists_item_for_seometahelper');
+            else
+                element.classList.add('lists_item_for_seometahelper','nofollow');
+        }
+
     });
 }
 
@@ -153,11 +167,12 @@ chrome.runtime.onConnect.addListener(function(port) {
             "className": "markMark",
           };
           // Remove previous marked elements and mark
-          // the new keyword inside the context                 
+          // the new keyword inside the context
           markInstance.unmark({
             done: function(){
               markInstance.mark(keyword, options);
               highlightLinks();
+              highlightLists();
             }
           });
         })();
